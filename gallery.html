@@ -681,7 +681,7 @@
 
             <div class="gallery-item">
                 <div class="post-header">
-                    <img src="avatar2.jpg" alt="User Avatar" class="user-avatar">
+                    <img src="vatsal.jpg" alt="User Avatar" class="user-avatar">
                     <span class="user-name">@Vatsal_shah</span>
                 </div>
                 <img src="ugc_vatsal.jpg" alt="Guest Roccia Experience" class="post-image">
@@ -701,7 +701,7 @@
 
             <div class="gallery-item">
                 <div class="post-header">
-                    <img src="avatar3.jpg" alt="User Avatar" class="user-avatar">
+                    <img src="goli.jpg" alt="User Avatar" class="user-avatar">
                     <span class="user-name">@Aakash_kapadia</span>
                 </div>
                 <img src="AAKASH_UGC.jpg" alt="Free Fly" class="post-image">
@@ -721,7 +721,7 @@
 
             <div class="gallery-item">
                 <div class="post-header">
-                    <img src="avatar4.jpg" alt="User Avatar" class="user-avatar">
+                    <img src="vansh.jpg" alt="User Avatar" class="user-avatar">
                     <span class="user-name">@vansh_shah</span>
                 </div>
                 <img src="ugc_paintball.jpg" alt="Paint Ball" class="post-image">
@@ -869,6 +869,95 @@
                         window.location.href = 'index.html';
                     }, 300);
                 }
+
+                // Handle browser back button and mouse back button
+                window.addEventListener('popstate', function() {
+                    redirectToHome();
+                });
+
+                // Handle mouse buttons (like back button on mouse)
+                window.addEventListener('mouseup', function(e) {
+                    // Mouse back button is usually button 3 or 4
+                    if (e.button === 3 || e.button === 4) {
+                        e.preventDefault();
+                        redirectToHome();
+                    }
+                });
+
+                // Handle keyboard shortcuts
+                window.addEventListener('keydown', function(e) {
+                    // Alt + Left Arrow (common back shortcut)
+                    if (e.altKey && e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        redirectToHome();
+                    }
+                    
+                    // Backspace key when not in an input field
+                    if (e.key === 'Backspace' && 
+                        document.activeElement.tagName !== 'INPUT' && 
+                        document.activeElement.tagName !== 'TEXTAREA') {
+                        e.preventDefault();
+                        redirectToHome();
+                    }
+                });
+
+                // Function to handle the redirect with fade effect
+                function redirectToHome() {
+                    // Don't redirect if already on index.html
+                    if (window.location.pathname.endsWith('index.html') || 
+                        window.location.pathname === '/' || 
+                        window.location.pathname === '') {
+                        return;
+                    }
+
+                    // Add fade-out effect
+                    document.body.style.opacity = '0';
+                    document.body.style.transition = 'opacity 0.3s ease';
+
+                    // Redirect to index.html after fade
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                }
+
+                // Prevent default back behavior
+                history.pushState(null, null, window.location.href);
+                window.addEventListener('load', function() {
+                    history.pushState(null, null, window.location.href);
+                });
+
+                // Handle page refresh
+                window.addEventListener('load', function() {
+                    if (performance.navigation.type === 1) { // 1 indicates page refresh
+                        redirectToHome();
+                    }
+                });
+
+                // Handle unload events
+                window.addEventListener('beforeunload', function(e) {
+                    // Only if it's a navigation back (not refresh or forward)
+                    if (performance.navigation.type !== 1) {
+                        document.body.style.opacity = '0';
+                    }
+                });
+
+                // Prevent going back in browser history
+                history.pushState(null, null, location.href);
+                window.onpopstate = function() {
+                    history.pushState(null, null, location.href);
+                    // Add fade effect
+                    document.body.style.opacity = '0';
+                    // Redirect to index.html
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 300);
+                };
+
+                // Handle page load
+                window.onload = function() {
+                    // Add another state to the history to ensure back button works
+                    history.pushState(null, null, location.href);
+                };
             </script>
 </body>
 

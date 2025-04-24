@@ -17,8 +17,12 @@
     <script src="script.js"></script>
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
 
+    
+
+    
 
     <style>
+        
         /* Add to your existing CSS */
         img,
         video {
@@ -30,10 +34,16 @@
         /* Responsive iframes/videos */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
+            padding-bottom: 42.1875%; /* Reduced from 56.25% (makes height smaller) */
             height: 0;
             overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 40px auto; /* Center the container */
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            max-width: 75%; /* Makes the width smaller */
         }
 
         .video-container iframe,
@@ -43,6 +53,12 @@
             left: 0;
             width: 100%;
             height: 100%;
+            transition: transform 0.3s ease;
+            object-fit: cover;
+        }
+
+        .video-container:hover video {
+            transform: scale(1.02);
         }
 
         /* Add to your :root or body styles */
@@ -689,10 +705,50 @@
             flex-shrink: 0;
         }
 
+        /* Typing Effect for h4 */
         .feature-text h4 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            color: var(--dark);
+            position: relative;
+            width: fit-content;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid var(--primary);
+            animation: typing 3s steps(30) 1s 1 normal both,
+                     blink 1s steps(1) infinite;
+            opacity: 0;
+        }
+
+        .feature-item:hover .feature-text h4 {
+            opacity: 1;
+            animation: typing 3s steps(30) 1s 1 normal both,
+                     blink 1s steps(1) infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        /* Add this to ensure text is visible before hover */
+        .feature-text h4 {
+            opacity: 1;
+            width: 100%;
+        }
+
+        /* Reset animation on hover */
+        .feature-item:hover .feature-text h4 {
+            width: 0;
+            opacity: 1;
+            animation: typing 1.5s steps(30) forwards;
         }
 
         .feature-text p {
@@ -854,7 +910,7 @@
         /* Resort Section */
         .resort {
             position: relative;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('rocciahillresort1.jpg') no-repeat center center/cover;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('resortview1.jpg') no-repeat center center/cover;
             color: white;
             padding: 150px 0;
             text-align: center;
@@ -1820,6 +1876,105 @@
                 color: var(--dark);
             }
         }
+
+        /* Video Section Styles */
+        .video-showcase {
+            padding: 80px 0;
+            background: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(29, 169, 108, 0.1), rgba(26, 42, 58, 0.1));
+            animation: gradientMove 10s ease infinite;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 42.1875%; /* Reduced from 56.25% (makes height smaller) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin: 40px auto; /* Center the container */
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+            max-width: 75%; /* Makes the width smaller */
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .video-container:hover iframe {
+            transform: scale(1.02);
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Text Reveal Effect */
+        .logo h1.typewriter {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .logo h1.typewriter::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .logo h1.typewriter:hover::before {
+            transform: translateX(100%);
+        }
+
+        .typewriter-text {
+            color: white;
+            transition: all 0.6s ease;
+        }
+
+        .logo h1.typewriter:hover .typewriter-text {
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes highlight {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
     </style>
 </head>
 
@@ -1842,7 +1997,7 @@
                         <a href="#Activities">Activities</a>
                         <div class="dropdown-content">
                             <a href="activities.html">Passes</a>
-                            <a href="#activities" onclick="scrollToActivities(event)">All Activities</a>
+                           
                         </div>
                     </li>
 
@@ -1947,13 +2102,13 @@
                             <i class="fas fa-mountain"></i>
                         </div>
                         <div class="feature-text">
-                            <h4>35+ Acres</h4>
+                            <h4>24+ Acres</h4>
                             <p>Vast natural landscape to explore</p>
                         </div>
                     </div>
                     <div class="feature-item">
                         <div class="feature-icon">
-                            <i class="fas fa-route"></i>
+                            <i class="fas fa-truck-monster"></i>
                         </div>
                         <div class="feature-text">
                             <h4>55+ Activities</h4>
@@ -1965,13 +2120,13 @@
                             <i class="fas fa-home"></i>
                         </div>
                         <div class="feature-text">
-                            <h4>Luxury Tents & Villas</h4>
+                            <h4>Luxury Rooms,Villas & Tents</h4>
                             <p>Comfortable accommodations</p>
                         </div>
                     </div>
                     <div class="feature-item">
                         <div class="feature-icon">
-                            <i class="fas fa-award"></i>
+                            <i class="fas fa-wine-glass-alt"></i>
                         </div>
                         <div class="feature-text">
                             <h4>Jalsa Bar & Lounge</h4>
@@ -2134,10 +2289,10 @@
                         </div>
                         <div class="activity-info">
                             <h3>Mountain Tents</h3>
-                            <p>"Where the wild meets the wow. Camp high, live free."
+                            <p>Where the wild meets the wow. Camp high, live free.
                                 "Sleep under stars, wake up to peaks."</p>
                             <div class="activity-meta">
-                                <span class="activity-price">3750/Night (Excl. of GST) (WITH BREAKFAST)
+                                <span class="activity-price">3750/Night (Excl. of GST)   (WITH BREAKFAST)
                                 </span>
                                 <a href="booking.html?type=tents" class="activity-btn">Book Now</a>
                             </div>
@@ -2261,17 +2416,21 @@
             </div>
     </section>
 
-    <!-- After the gallery section and before the testimonials section -->
+    <!-- Add this section after your gallery section and before testimonials -->
     <section class="section video-showcase">
-        <div class="section-title">
-            <h2>Experience Roccia</h2>
-            <p>Take a virtual tour through our adventure park</p>
-        </div>
-        <div class="video-container">
-            <video class="full-width-video" autoplay muted loop playsinline poster="adventureview.jpeg.jpg.jpg">
-                <source src="Timeline 1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
+        <div class="container">
+            <div class="section-header">
+
+                <h2 class="section-title">Experience Roccia Adventure Virtually</h2>
+                <div class="section-description">
+
+                </div>
+            </div>
+            <div class="video-container">
+                <video src="rocciadrone.mp4" autoplay muted loop playsinline>
+                    Your browser does not support the video tag.
+                </video>
+            </div>
         </div>
     </section>
 
@@ -2439,12 +2598,12 @@
             <div class="footer-col">
                 <h3>Activities</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Zip Lining</a></li>
-                    <li><a href="#">Rock Climbing</a></li>
-                    <li><a href="#">Free Fall</a></li>
-                    <li><a href="#">Water Sports</a></li>
-                    <li><a href="#">AR/VR Activities</a></li>
-                    <li><a href="#">Family Stays</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'adventure')">Zip Lining</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'adventure')">Rock Climbing</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'extreme')">Free Fall</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'leisure')">Water Sports</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'leisure')">AR/VR Activities</a></li>
+                    <li><a href="activities.html" onclick="sessionStorage.setItem('selectedPass', 'leisure')">Family Stays</a></li>
                 </ul>
             </div>
             <div class="footer-col footer-newsletter">
@@ -2457,7 +2616,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Roccia Hill Resort & Adventure Park . All Rights Reserved. Developed By Bhavya | <a
+            <p>&copy; 2025 Roccia Hill Resort & Adventure Park . All Rights Reserved. Developed By Bhavya Lakdawala | <a
                     href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
         </div>
     </footer>
@@ -3197,23 +3356,37 @@
         // Add this function to your existing script section
         function scrollToActivities(event) {
             event.preventDefault();
-
-            const activitiesSection = document.querySelector('.section.activities');
-            if (activitiesSection) {
-                // Add fade effect
-                document.body.style.opacity = '0';
-                document.body.style.transition = 'opacity 0.3s ease';
-
-                setTimeout(() => {
-                    // Scroll to activities section
-                    activitiesSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Add fade-out effect
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                // Get the activities section title
+                const activitiesTitle = document.querySelector('.section-title h2');
+                
+                if (activitiesTitle && activitiesTitle.textContent === 'Our Activities') {
+                    // Get the parent section
+                    const activitiesSection = activitiesTitle.closest('.section');
+                    
+                    // Scroll to activities section with offset for header
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const elementPosition = activitiesSection.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: elementPosition - headerHeight - 20, // 20px extra padding
+                        behavior: 'smooth'
+                    });
+                    
+                    // Update URL without page reload
+                    history.pushState(null, '', '#activities');
+                    
                     // Fade back in
                     document.body.style.opacity = '1';
-
-                    // Update URL without triggering scroll
-                    history.pushState(null, null, '#activities');
-                }, 300);
-            }
+                    
+                    // Add highlight animation to the section
+                    activitiesSection.style.animation = 'highlight 1s ease';
+                }
+            }, 300);
         }
 
         // Refresh and navigation handling

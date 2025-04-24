@@ -10,6 +10,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap"
         rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         /* Add to your existing CSS */
         img,
@@ -68,9 +70,10 @@
 
         :root {
             --primary: #1da96c;
-            --secondary: #1da96c;
+            --secondary: #2ecc71;
             --dark: #1a2a3a;
             --light: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         }
 
         * {
@@ -81,140 +84,144 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f8f9fa;
+            min-height: 100vh;
+            background: var(--dark);
+            background-image: url('enhancedroccia.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            position: relative;
             opacity: 0;
-            animation: fadeIn 0.5s ease forwards;
+            animation: fadeIn 1s forwards;
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Add this after the body style */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            background-attachment: fixed;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        /* Add this overlay to ensure content readability */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(26, 42, 58, 0.85); /* var(--dark) with opacity */
+            z-index: -1;
         }
 
         /* Header Styles */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             position: fixed;
-            width: 100%;
             top: 0;
+            left: 0;
+            width: 100%;
             z-index: 1000;
-            padding: 15px 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .header-container {
-            max-width: 1400px;
+        .container {
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
         }
 
-        .logo h1 {
+        .logo {
             font-family: 'Montserrat', sans-serif;
-            color: var(--dark);
             font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
         }
 
         .back-btn {
-            background: var(--primary);
-            color: white;
+            background: var(--gradient);
+            color: var(--light);
+            text-decoration: none;
             padding: 10px 25px;
             border-radius: 30px;
-            text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
         .back-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.2);
+            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.3);
         }
 
-        /* Activities Section */
-        .activities-section {
-            padding: 120px 20px 60px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .section-title h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 15px;
-        }
-
-        .section-title p {
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .pass-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .pass-tabs {
-            display: flex;
-            gap: 20px;
-        }
-
-        .pass-tab {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            background: white;
-            color: var(--dark);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .pass-tab.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.2);
-        }
-
+        /* Activities Grid */
         .activities-grid {
+            margin-top: 100px;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             padding: 20px;
         }
 
-        .category-section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
+        .activity-category {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
         }
 
-        .category-section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        .activity-category:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
 
         .category-title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
+            font-size: 1.5rem;
+            color: var(--light);
         }
 
         .activity-list {
@@ -225,339 +232,919 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 10px 0;
-            border-bottom: 1px solid #f5f5f5;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-20px);
         }
 
         .activity-item:last-child {
             border-bottom: none;
         }
 
-        .activity-icon {
-            font-size: 1.5rem;
+        .activity-item:hover {
+            padding-left: 10px;
+            color: var(--primary);
         }
 
         .activity-name {
-            font-size: 1rem;
-            color: #444;
+            flex-grow: 1;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
+        .activity-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
 
+        .book-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: var(--light);
+            text-decoration: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .section-title h2 {
-                font-size: 2rem;
-            }
-
-            .pass-tab {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-
             .activities-grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+            }
+
+            .activity-category {
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
 
-        /* Update the book-now-btn to match pass-tab exactly */
-        .book-now-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 30px;
-            background: white;
-            color: var(--dark);
-            font-weight: 600;
+        .pass-section {
+            margin-top: 100px;
+            padding: 40px 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            visibility: hidden;
+            display: none;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .pass-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .pass-title {
+            font-size: 2.5rem;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--light);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .pass-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: width 0.4s ease;
+        }
+
+        .pass-price {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin: 15px 0;
+        }
+
+        .pass-description {
+            color: #888;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        /* Add gradient borders to sections */
+        .pass-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient);
+        }
+
+        /* Pass Selection Styles */
+        .pass-selector {
+            margin-top: 100px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transform: translateY(30px);
+            opacity: 0;
+            animation: floatUp 0.6s ease forwards;
+        }
+
+        .pass-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .pass-card:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .pass-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(29, 169, 108, 0.2);
+        }
+
+        .pass-card.active {
+            background: var(--gradient);
+            border-color: transparent;
+        }
+
+        .pass-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .pass-card .price {
+            font-size: 2rem;
+            color: var(--primary);
+            margin: 15px 0;
+        }
+
+        .pass-card.active .price {
+            color: var(--light);
+        }
+
+        .pass-card p {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        .pass-card.active p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Show active pass section */
+        .pass-section.active {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+            display: block;
+            pointer-events: all;
+        }
+
+        /* New Animations */
+        @keyframes floatUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Activity Item Enhanced Animations */
+        .active .activity-item {
+            animation: slideIn 0.4s ease forwards;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Staggered animations for activity items */
+        .activity-list .activity-item:nth-child(1) { animation-delay: 0.1s; }
+        .activity-list .activity-item:nth-child(2) { animation-delay: 0.2s; }
+        .activity-list .activity-item:nth-child(3) { animation-delay: 0.3s; }
+        .activity-list .activity-item:nth-child(4) { animation-delay: 0.4s; }
+        .activity-list .activity-item:nth-child(5) { animation-delay: 0.5s; }
+        .activity-list .activity-item:nth-child(6) { animation-delay: 0.6s; }
+        .activity-list .activity-item:nth-child(7) { animation-delay: 0.7s; }
+        .activity-list .activity-item:nth-child(8) { animation-delay: 0.8s; }
+
+        /* Category Icon Animation */
+        .category-icon i {
+            transition: transform 0.4s ease;
+        }
+
+        .activity-category:hover .category-icon i {
+            transform: scale(1.2) rotate(360deg);
+        }
+
+        /* Pass Title Animation */
+        .active .pass-title::after {
+            width: 50%;
+        }
+
+        .pass-section.active .activity-category {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Add these CSS styles to your existing styles section */
+        .book-now-btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: var(--light);
             text-decoration: none;
-            font-size: 1rem;
-            font-family: 'Poppins', sans-serif;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            height: 100%;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
         }
 
         .book-now-btn:hover {
-            background: var(--primary);
-            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.2);
+            box-shadow: 0 5px 15px rgba(29, 169, 108, 0.3);
         }
 
-        .book-now-btn i {
-            font-size: 1rem;
+        .pass-card.active .book-now-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* Update the HTML structure */
+        .pass-card.active .book-now-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Add this for initial state message */
+        .initial-message {
+            text-align: center;
+            margin-top: 150px;
+            padding: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 
 <body>
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <h1>Roccia Activities</h1>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">Adventure Passes</a>
+                <a href="index.html" class="back-btn">Back to Home</a>
             </div>
-            <a href="index.html" class="back-btn">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back to Home</span>
-            </a>
         </div>
     </header>
 
-    <section class="activities-section">
-        <div class="section-title">
-            <h2>Our Adventure Activities</h2>
-            <p>Explore our wide range of exciting activities across different passes</p>
+    <div class="pass-selector">
+        <div class="pass-card" data-pass="leisure">
+            <h3>Leisure Pass</h3>
+            <div class="price">₹1,149</div>
+            <p>Perfect for families and beginners looking for a fun-filled adventure experience with 40+ activities</p>
+            <a href="booking.html" class="book-now-btn">Book Now</a>
         </div>
-
-        <div class="pass-header">
-            <button class="pass-tab active" data-pass="leisure">Leisure Pass</button>
-            <button class="pass-tab" data-pass="adventure">Adventure Pass</button>
-            <button class="pass-tab" data-pass="extreme">Extreme Pass</button>
-            <a href="booking.html" class="book-now-btn">
-                <i class="fas fa-ticket-alt"></i>
-                Book Now
-            </a>
+        <div class="pass-card" data-pass="adventure">
+            <h3>Adventure Pass</h3>
+            <div class="price">₹1,499</div>
+            <p>For thrill-seekers ready to take their adventure to the next level with 45+ activities</p>
+            <a href="booking.html" class="book-now-btn">Book Now</a>
         </div>
+        <div class="pass-card" data-pass="extreme">
+            <h3>Extreme Pass</h3>
+            <div class="price">₹1,999</div>
+            <p>Ultimate adventure experience for the most daring thrill-seekers with 50+ activities</p>
+            <a href="booking.html" class="book-now-btn">Book Now</a>
+        </div>
+    </div>
 
-        <div class="activities-container">
-            <!-- Activities will be dynamically loaded here -->
+    <!-- Add this after the pass-selector div and before the pass sections -->
+    <div class="initial-message">
+        Please select a pass above to view its activities
+    </div>
+
+    <!-- Leisure Pass Section -->
+    <section class="pass-section" id="leisure">
+        <div class="container">
+            <div class="pass-header">
+                <h2 class="pass-title">Leisure Pass</h2>
+                <div class="pass-price">₹1,149</div>
+                <p class="pass-description">Perfect for families and beginners looking for a fun-filled adventure experience with 40+ activities</p>
+            </div>
+
+            <div class="activities-grid">
+                <!-- Adventure Activities -->
+                <div class="activity-category" data-aos="fade-up">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-mountain"></i>
+                        </div>
+                        <h2 class="category-title">Adventure Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Zipcycle</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rock Climbing</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rope Course</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse Bungee</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Running Bungee</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kids Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h2 class="category-title">Kids Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Children Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Children Rock Climbing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Water Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h2 class="category-title">Water Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Rain Dance</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Mini Water Park</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fun Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-smile-beam"></i>
+                        </div>
+                        <h2 class="category-title">Fun Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Human Gyro</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rocket Boom</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Meltdown</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Foosball</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Archery</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Cricket</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Wrestling</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse and Other Cycle</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Virtual Reality & Special -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="400">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <h2 class="category-title">Virtual Reality & Special</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">VR Baby Bear</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">VR Horse</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Illusion Room</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Adventure Pass Section -->
+    <section class="pass-section" id="adventure">
+        <div class="container">
+            <div class="pass-header">
+                <h2 class="pass-title">Adventure Pass</h2>
+                <div class="pass-price">₹1,499</div>
+                <p class="pass-description">For thrill-seekers ready to take their adventure to the next level with 45+ activities</p>
+            </div>
+
+            <div class="activities-grid">
+                <!-- Adventure Activities -->
+                <div class="activity-category" data-aos="fade-up">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-hiking"></i>
+                        </div>
+                        <h2 class="category-title">Adventure Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Sky Walk</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Zipcycle</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Sling Shot</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rock Climbing</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse Bungee</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rope Course</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Running Bungee</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kids Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h2 class="category-title">Kids Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Children Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Children Rock Climbing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Water Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h2 class="category-title">Water Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Rain Dance</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Mini Water Park</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fun Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-smile-beam"></i>
+                        </div>
+                        <h2 class="category-title">Fun Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Human Gyro</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rocket Boom</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Meltdown</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Foosball</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Archery</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Cricket</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Wrestling</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse and Other Cycle</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Virtual Reality & Special -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="400">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <h2 class="category-title">Virtual Reality & Special</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">VR Baby Bear</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">VR Horse</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">9D VR Cinematic</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">9D VR Seat/2</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Illusion Room</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Air Rifle</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Extreme Pass Section -->
+    <section class="pass-section" id="extreme">
+        <div class="container">
+            <div class="pass-header">
+                <h2 class="pass-title">Extreme Pass</h2>
+                <div class="pass-price">₹1,999</div>
+                <p class="pass-description">Ultimate adventure experience for the most daring thrill-seekers with 50+ activities</p>
+            </div>
+
+            <div class="activities-grid">
+                <!-- Adventure Activities -->
+                <div class="activity-category" data-aos="fade-up">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h2 class="category-title">Extreme Adventures</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Free Fly</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Sky Walk</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Zipcycle</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Sling Shot</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rock Climbing</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Paint Ball</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse Bungee</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rope Course</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Running Bungee</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">ATV</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Kids Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h2 class="category-title">Kids Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Children Zipline</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Children Rock Climbing</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Water Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h2 class="category-title">Water Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Rain Dance</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Mini Water Park</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Fun Activities -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-smile-beam"></i>
+                        </div>
+                        <h2 class="category-title">Fun Activities</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">Human Gyro</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Rocket Boom</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Meltdown</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Foosball</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Archery</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Cricket</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Human Wrestling</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Reverse and Other Cycle</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Virtual Reality & Special -->
+                <div class="activity-category" data-aos="fade-up" data-aos-delay="400">
+                    <div class="category-header">
+                        <div class="category-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <h2 class="category-title">Virtual Reality & Special</h2>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <span class="activity-name">VR Baby Bear</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">VR Horse</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">9D VR Cinematic</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">9D VR Seat/2</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Illusion Room</span>
+                        </li>
+                        <li class="activity-item">
+                            <span class="activity-name">Air Rifle</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
     <script>
-        const activities = {
-            leisure: [
-                // Adventure Activities
-                { icon: "🎢", name: "Zipline", category: "Adventure" },
-                { icon: "🚴", name: "Zipcycle", category: "Adventure" },
-                { icon: "🧗‍♂️", name: "Rock Climbing", category: "Adventure" },
-                { icon: "🎪", name: "Rope Course", category: "Adventure" },
-                { icon: "🎯", name: "Reverse Bungee", category: "Adventure" },
-                { icon: "🏃", name: "Running Bungee", category: "Adventure" },
-
-                // Kids Activities
-                { icon: "👶", name: "Children Zipline", category: "Kids" },
-                { icon: "🧒", name: "Children Rock Climbing", category: "Kids" },
-
-                // Water Activities
-                { icon: "💃", name: "Rain Dance", category: "Water" },
-                { icon: "🌊", name: "Mini Water Park", category: "Water" },
-
-                // Fun Activities
-                { icon: "🎡", name: "Human Gyro", category: "Fun" },
-                { icon: "🚀", name: "Rocket Boom", category: "Fun" },
-                { icon: "💥", name: "Meltdown", category: "Fun" },
-                { icon: "⚽", name: "Human Foosball", category: "Fun" },
-                { icon: "🎯", name: "Archery", category: "Fun" },
-                { icon: "🏏", name: "Cricket", category: "Fun" },
-                { icon: "🤼", name: "Human Wrestling", category: "Fun" },
-
-                // Virtual Reality & Special
-                { icon: "🎮", name: "VR Baby Bear", category: "Virtual Reality" },
-                { icon: "🐎", name: "VR Horse", category: "Virtual Reality" },
-                { icon: "🎪", name: "Illusion Room", category: "Special" },
-                { icon: "🚲", name: "Reverse and Other Cycle", category: "Fun" }
-            ],
-            adventure: [   // Adventure Activities
-                { icon: "🎢", name: "Zipline", category: "Adventure" },
-                { icon: "🌄", name: "Sky Walk", category: "Adventure" },
-                { icon: "🚴", name: "Zipcycle", category: "Adventure" },
-                { icon: "🎯", name: "Human Sling Shot", category: "Adventure" },
-                { icon: "🧗‍♂️", name: "Rock Climbing", category: "Adventure" },
-                { icon: "🎢", name: "Reverse Bungee", category: "Adventure" },
-                { icon: "🎪", name: "Rope Course", category: "Adventure" },
-                { icon: "🏃", name: "Running Bungee", category: "Adventure" },
-
-                // Kids Activities
-                { icon: "👶", name: "Children Zipline", category: "Kids" },
-                { icon: "🧒", name: "Children Rock Climbing", category: "Kids" },
-
-                // Water Activities
-                { icon: "💃", name: "Rain Dance", category: "Water" },
-                { icon: "🌊", name: "Mini Water Park", category: "Water" },
-
-                // Fun Activities
-                { icon: "🎡", name: "Human Gyro", category: "Fun" },
-                { icon: "🚀", name: "Rocket Boom", category: "Fun" },
-                { icon: "💥", name: "Meltdown", category: "Fun" },
-                { icon: "⚽", name: "Human Foosball", category: "Fun" },
-                { icon: "🎯", name: "Archery", category: "Fun" },
-                { icon: "🏏", name: "Cricket", category: "Fun" },
-                { icon: "🤼", name: "Human Wrestling", category: "Fun" },
-                { icon: "🚲", name: "Reverse and Other Cycle", category: "Fun" },
-
-                // Virtual Reality & Special
-                { icon: "🎮", name: "VR Baby Bear", category: "Virtual Reality" },
-                { icon: "🐎", name: "VR Horse", category: "Virtual Reality" },
-                { icon: "🎬", name: "9D VR Cinematic", category: "Virtual Reality" },
-                { icon: "💺", name: "9D VR Seat/2", category: "Virtual Reality" },
-                { icon: "🎪", name: "Illusion Room", category: "Special" },
-                { icon: "🎯", name: "Air Rifle", category: "Special" }
-            ],// Keep empty for now
-            extreme: [{ icon: "🎢", name: "Zipline", category: "Adventure" },
-            { icon: "🪂", name: "Free Fly", category: "Adventure" },
-            { icon: "🌄", name: "Sky Walk", category: "Adventure" },
-            { icon: "🚴", name: "Zipcycle", category: "Adventure" },
-            { icon: "🎯", name: "Human Sling Shot", category: "Adventure" },
-            { icon: "🧗‍♂️", name: "Rock Climbing", category: "Adventure" },
-            { icon: "🎨", name: "Paint Ball", category: "Adventure" },
-            { icon: "🎢", name: "Reverse Bungee", category: "Adventure" },
-            { icon: "🎪", name: "Rope Course", category: "Adventure" },
-            { icon: "🏃", name: "Running Bungee", category: "Adventure" },
-            { icon: "🏎️", name: "ATV", category: "Adventure" },
-
-            // Kids Activities
-            { icon: "👶", name: "Children Zipline", category: "Kids" },
-            { icon: "🧒", name: "Children Rock Climbing", category: "Kids" },
-
-            // Water Activities
-            { icon: "💃", name: "Rain Dance", category: "Water" },
-            { icon: "🌊", name: "Mini Water Park", category: "Water" },
-
-            // Fun Activities
-            { icon: "🎡", name: "Human Gyro", category: "Fun" },
-            { icon: "🚀", name: "Rocket Boom", category: "Fun" },
-            { icon: "💥", name: "Meltdown", category: "Fun" },
-            { icon: "⚽", name: "Human Foosball", category: "Fun" },
-            { icon: "🎯", name: "Archery", category: "Fun" },
-            { icon: "🏏", name: "Cricket", category: "Fun" },
-            { icon: "🤼", name: "Human Wrestling", category: "Fun" },
-            { icon: "🚲", name: "Reverse and Other Cycle", category: "Fun" },
-
-            // Virtual Reality & Special
-            { icon: "🎮", name: "VR Baby Bear", category: "Virtual Reality" },
-            { icon: "🐎", name: "VR Horse", category: "Virtual Reality" },
-            { icon: "🎬", name: "9D VR Cinematic", category: "Virtual Reality" },
-            { icon: "💺", name: "9D VR Seat/2", category: "Virtual Reality" },
-            { icon: "🎪", name: "Illusion Room", category: "Special" },
-            { icon: "🎯", name: "Air Rifle", category: "Special" }
-            ]   // Keep empty for now
-        };
-
-        function groupActivitiesByCategory(activities) {
-            return activities.reduce((acc, activity) => {
-                if (!acc[activity.category]) {
-                    acc[activity.category] = [];
-                }
-                acc[activity.category].push(activity);
-                return acc;
-            }, {});
-        }
-
-        function displayActivities(passType) {
-            const container = document.querySelector('.activities-container');
-            const groupedActivities = groupActivitiesByCategory(activities[passType]);
-
-            const grid = document.createElement('div');
-            grid.className = 'activities-grid';
-
-            Object.entries(groupedActivities).forEach(([category, categoryActivities]) => {
-                const section = document.createElement('div');
-                section.className = 'category-section';
-
-                section.innerHTML = `
-                    <h3 class="category-title">${category}</h3>
-                    <ul class="activity-list">
-                        ${categoryActivities.map(activity => `
-                            <li class="activity-item">
-                                <span class="activity-icon">${activity.icon}</span>
-                                <span class="activity-name">${activity.name}</span>
-                            </li>
-                        `).join('')}
-                    </ul>
-                `;
-
-                grid.appendChild(section);
-            });
-
-            container.innerHTML = '';
-            container.appendChild(grid);
-        }
-
-        // Tab switching functionality
-        document.querySelectorAll('.pass-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.pass-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                displayActivities(tab.dataset.pass);
-            });
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
         });
 
-        // Initialize with leisure pass activities
-        displayActivities('leisure');
-
-        // Add this to your existing script section
-        document.querySelector('.book-now-btn').addEventListener('click', function (e) {
-            e.preventDefault();
-
-            // Add fade-out effect
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.3s ease';
-
-            // Redirect after animation
-            setTimeout(() => {
-                window.location.href = 'booking.html';
-            }, 300);
-        });
-
-        // Handle page refresh
-        window.addEventListener('load', function () {
-            if (performance.navigation.type === performance.navigation.TYPE_RELOAD) {
-                // Add fade-out effect
-                document.body.style.opacity = '0';
-                document.body.style.transition = 'opacity 0.3s ease';
-
-                // Redirect to index.html after fade
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 300);
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
             }
         });
 
-        // Handle browser back button
-        window.addEventListener('popstate', function (event) {
-            // Add fade-out effect
-            document.body.style.opacity = '0';
-            document.body.style.transition = 'opacity 0.3s ease';
-
-            // Redirect to index.html after fade
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 300);
-        });
-
-        // Prevent default refresh behavior
-        window.onbeforeunload = function () {
-            document.body.style.opacity = '0';
-        };
-
-        // Handle manual refresh (F5 or Ctrl/Cmd + R)
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'F5' || (e.key === 'r' && (e.ctrlKey || e.metaKey))) {
+        // Smooth page transitions
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) return;
+                
                 e.preventDefault();
-
-                // Add fade-out effect
                 document.body.style.opacity = '0';
                 document.body.style.transition = 'opacity 0.3s ease';
-
-                // Redirect to index.html after fade
+                
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = this.href;
                 }, 300);
+            });
+        });
+
+        // Handle refresh and back button
+        window.addEventListener('load', function() {
+            // Check if this is a page refresh/reload
+            if (performance.navigation.type === 1) { // 1 indicates page refresh
+                window.location.href = 'index.html';
+            } else {
+                // If it's a normal page load, fade in the content
+                document.body.style.opacity = '1';
             }
+        });
+
+        // Update the popstate handler as well
+        window.addEventListener('popstate', function() {
+            window.location.href = 'index.html';
+        });
+
+        // Update the JavaScript pass selection functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const passCards = document.querySelectorAll('.pass-card');
+            const passSections = document.querySelectorAll('.pass-section');
+            const initialMessage = document.querySelector('.initial-message');
+
+            passCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const clickedPassId = this.getAttribute('data-pass');
+                    
+                    // Don't do anything if clicking the already active pass
+                    if (this.classList.contains('active')) return;
+
+                    // Remove active class from all cards
+                    passCards.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked card
+                    this.classList.add('active');
+
+                    // Hide initial message
+                    initialMessage.style.display = 'none';
+
+                    // Handle section transition
+                    passSections.forEach(section => {
+                        if (section.id === clickedPassId) {
+                            section.classList.add('active');
+                            // Reset transform and opacity after adding active class
+                            setTimeout(() => {
+                                section.style.transform = 'translateY(0)';
+                                section.style.opacity = '1';
+                            }, 50);
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+
+                    // Smooth scroll to the new section
+                    const targetSection = document.getElementById(clickedPassId);
+                    setTimeout(() => {
+                        targetSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }, 100);
+                });
+            });
+
+            // Initialize AOS for activity categories
+            document.querySelectorAll('.activity-category').forEach((category, index) => {
+                category.style.transitionDelay = `${index * 0.1}s`;
+            });
+        });
+
+        // Enhanced button transition
+        document.querySelectorAll('.book-now-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Add click animation
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+
+                // Fade out page and redirect
+                document.body.style.opacity = '0';
+                document.body.style.transition = 'opacity 0.3s ease';
+                
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 300);
+            });
         });
     </script>
 </body>
