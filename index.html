@@ -475,22 +475,18 @@
         }
 
         .about-container {
-            display: flex;
-            align-items: center;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 30px;
-            gap: 50px;
+            padding: 20px;
         }
 
         .about-slideshow {
-            flex: 1;
-            position: relative;
+            width: 100%;
+            height: 500px; /* Taller height for desktop */
+            margin-bottom: 40px;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            height: clamp(300px, 50vw, 600px);
-            background: var(--dark);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .slides-container {
@@ -1985,168 +1981,7 @@
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
-        }
-
-        .about-content h3 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-
-        .about-content p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #666;
-        }
-
-        /* Features grid layout */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-
-        .feature-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            color: var(--primary);
-            min-width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-text h4 {
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-            color: var(--dark);
-        }
-
-        .feature-text p {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-            color: #666;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 1024px) {
-            .about-content h3 {
-                font-size: 2rem;
-            }
-
-            .features {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .about-content {
-                padding: 15px;
-            }
-
-            .about-content h3 {
-                font-size: 1.8rem;
-            }
-
-            .about-content p {
-                font-size: 1rem;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .feature-item {
-                padding: 15px;
-            }
-
-            .feature-icon {
-                font-size: 1.5rem;
-                min-width: 40px;
-                height: 40px;
-            }
-
-            .feature-text h4 {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .about-content h3 {
-                font-size: 1.5rem;
-            }
-
-            .about-content p {
-                font-size: 0.9rem;
-            }
-
-            .feature-item {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                padding: 20px 15px;
-            }
-
-            .feature-icon {
-                margin-bottom: 10px;
-            }
-
-            .features {
-                margin-top: 30px;
-            }
-        }
-
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            .feature-item {
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-            .about-content h3,
-            .feature-text h4 {
-                color: #fff;
-            }
-
-            .about-content p,
-            .feature-text p {
-                color: rgba(255, 255, 255, 0.7);
-            }
-        }
-
-        /* Touch device optimization */
-        @media (hover: none) {
-            .feature-item {
-                transform: none !important;
-            }
-
-            .feature-item:active {
-                background: rgba(255, 255, 255, 0.15);
-            }
-        }
-
-        /* Enhanced mobile-friendly styles for about section */
-        .about-content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            scroll-margin-top: 80px;
         }
 
         .about-content h3 {
@@ -2154,27 +1989,25 @@
             margin-bottom: 20px;
             color: var(--dark);
             text-align: center;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradientFlow 3s ease infinite;
+            font-weight: 600;
         }
 
         .about-content p {
             font-size: clamp(0.95rem, 4vw, 1.1rem);
             line-height: 1.8;
             margin-bottom: 25px;
-            color: #666;
+            color: #333;
             text-align: center;
         }
 
-        /* Enhanced features grid layout */
+        /* Features grid layout */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: clamp(20px, 3vw, 30px);
             margin-top: 40px;
             padding: 0 10px;
+            perspective: 1000px;
         }
 
         .feature-item {
@@ -2182,31 +2015,12 @@
             align-items: center;
             gap: 15px;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
-        }
-
-        .feature-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, 
-                rgba(29, 169, 108, 0.1), 
-                rgba(29, 169, 108, 0.05));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .feature-item:hover::before {
-            opacity: 1;
+            transition: all 0.3s ease;
         }
 
         .feature-icon {
@@ -2222,12 +2036,6 @@
             transition: all 0.3s ease;
         }
 
-        .feature-item:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-            color: white;
-            background: var(--primary);
-        }
-
         .feature-text {
             flex: 1;
         }
@@ -2237,13 +2045,12 @@
             margin-bottom: 8px;
             color: var(--dark);
             font-weight: 600;
-            transition: all 0.3s ease;
         }
 
         .feature-text p {
             font-size: clamp(0.85rem, 2.5vw, 0.9rem);
             margin-bottom: 0;
-            color: #666;
+            color: #333;
             text-align: left;
         }
 
@@ -2276,14 +2083,35 @@
                 height: 40px;
             }
 
-            /* Add touch feedback */
             .feature-item:active {
                 transform: scale(0.98);
                 background: rgba(29, 169, 108, 0.05);
             }
         }
 
-        /* Enhanced animations */
+        /* Small screen adjustments */
+        @media (max-width: 480px) {
+            .feature-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px 15px;
+            }
+
+            .feature-icon {
+                margin-bottom: 10px;
+            }
+
+            .feature-text p {
+                text-align: center;
+            }
+
+            .about-content h3 {
+                font-weight: 700;
+            }
+        }
+
+        /* Animations */
         @keyframes slideInFromRight {
             from {
                 opacity: 0;
@@ -2306,62 +2134,129 @@
             }
         }
 
-        @keyframes gradientFlow {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Dark mode enhancements */
-        @media (prefers-color-scheme: dark) {
-            .feature-item {
-                background: rgba(255, 255, 255, 0.05);
-                border-color: rgba(255, 255, 255, 0.1);
-            }
-
-            .feature-text h4 {
-                color: #fff;
-            }
-
-            .feature-text p {
-                color: rgba(255, 255, 255, 0.7);
-            }
-
-            .feature-icon {
-                background: rgba(29, 169, 108, 0.2);
-            }
-        }
-
-        /* Add stagger effect for features */
-        .features {
-            perspective: 1000px;
-        }
-
-        .feature-item {
-            animation-delay: calc(var(--index) * 0.1s);
-        }
-
-        /* Add smooth scroll behavior */
-        .about-content {
-            scroll-margin-top: 80px;
-        }
-
-        /* Add loading animation for images */
-        .feature-icon i {
-            opacity: 0;
-            animation: fadeIn 0.3s ease forwards;
-        }
-
         @keyframes fadeIn {
             to {
                 opacity: 1;
             }
+        }
+
+        /* Touch device optimization */
+        @media (hover: none) {
+            .feature-item {
+                transform: none !important;
+            }
+
+            .feature-item:active {
+                background: rgba(29, 169, 108, 0.05);
+            }
+        }
+
+        /* Slideshow container styles */
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .about-slideshow {
+            width: 100%;
+            height: 500px; /* Taller height for desktop */
+            margin-bottom: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive adjustments */
+        @media screen and (max-width: 1024px) {
+            .about-slideshow {
+                height: 400px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .about-container {
+                padding: 15px;
+            }
+
+            .about-slideshow {
+                height: 350px;
+                margin-bottom: 30px;
+                border-radius: 15px;
+            }
+
+            .slides-container {
+                height: 100%;
+            }
+
+            .slide {
+                height: 100%;
+            }
+
+            .slide img {
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+
+            /* Adjust caption to match feature items style */
+            .slide-caption {
+                background: rgba(255, 255, 255, 0.95);
+                color: var(--dark);
+                padding: 12px 20px;
+                font-size: 1.1rem;
+                font-weight: 500;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .about-container {
+                padding: 10px;
+            }
+
+            .about-slideshow {
+                height: 280px;
+                margin-bottom: 25px;
+                border-radius: 12px;
+            }
+
+            .slide-caption {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+
+            /* Match navigation with feature items */
+            .slide-arrow {
+                width: 35px;
+                height: 35px;
+                background: rgba(255, 255, 255, 0.95);
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                color: var(--dark);
+            }
+
+            .slide-dots button {
+                width: 8px;
+                height: 8px;
+                background: var(--dark);
+                opacity: 0.5;
+            }
+
+            .slide-dots button.active {
+                opacity: 1;
+            }
+        }
+
+        /* Ensure smooth transitions */
+        .slide {
+            transition: opacity 0.5s ease;
+        }
+
+        /* Progress bar styling to match theme */
+        .slide-progress .progress-bar {
+            background: var(--primary);
+            height: 3px;
         }
     </style>
 </head>
